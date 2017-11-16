@@ -4,7 +4,7 @@
 
     <title>James</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
         var accessToken = "e605f41a45d34a969546694711fd7fe0",
             baseUrl = "https://api.dialogflow.com/v1/",
@@ -12,7 +12,7 @@
             $recBtn,
             recognition,
             messageRecording = "Aufnahme...",
-            messageCouldntHear = "Ich habe sich nicht richtig verstanden, können Sie es wiederholen?",
+            messageCouldntHear = "Ich habe sie nicht richtig verstanden, können Sie es wiederholen?",
             messageInternalError = "Entschuldigung hier liegt ein interner Fehler vor",
             messageSorry = "Es tut mir Leid dazu habe ich keine Antwort";
         $(document).ready(function() {
@@ -130,7 +130,7 @@
             box-sizing: inherit;
         }
         body {
-            background-color: #192837;
+            background-color: #3c3f41;
             font-family: "Helvetica", Arial, sans-serif;
             font-size: 20px;
             margin: 0;
@@ -142,9 +142,9 @@
             -webkit-transform: translate(-50%, -50%);
         }
         input {
-            background-color: #126077;
-            border: 1px solid #3F7F93;
-            color: #A6CAE6;
+            background-color: #313335;
+            border: 1px solid #2b2b2b;
+            color: #f6f6f6;
             font-family: "Helvetica";
             font-size: 20px;
             line-height: 43px;
@@ -164,9 +164,9 @@
             outline: 1px solid #48788B;
         }
         .btn {
-            background-color: #126178;
-            border: 1px solid #549EAF;
-            color: #549EAF;
+            background-color: #000000;
+            border: 1px solid #313335;
+            color: #3c3f41;
             cursor: pointer;
             display: inline-block;
             font-family: "Helvetica";
@@ -178,8 +178,8 @@
             -webkit-transition: all 0.35s ease-in;
         }
         .btn:hover {
-            background-color: #1888A9;
-            color: #183035;
+            background-color: #3c3f41;
+            color: #000000;
         }
         .debug {
             bottom: 0;
@@ -208,8 +208,8 @@
             max-height: 400px;
         }
         .spoken-response__text {
-            background-color: #040E23;
-            color: #7584A2;
+            background-color: #b7c4c6;
+            color: #000000;
             padding: 1em;
         }
     </style>
