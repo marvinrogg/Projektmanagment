@@ -1,34 +1,98 @@
 
+// Aktuelles Problem, Reihenfolge der Darstellung der Abfragen und Fehlerbahndlungen der Abfragen
+// Speichern der Rückgabewerte für Umwandlung
 
-
-console.log("Hallo World");
-
-
+console.log("Fahrplandaten");
 var Client = require('node-rest-client').Client;
-
 var client = new Client();
+var city ="Offenburg";
+
+var args = {
+    headers : {"Authorization" : "Bearer 207af2c9a411a2846e84fd7dd96d9c83"}
+            };
+
+ eva = getEva();
+
+departure = getDeparture();
 
 
 // direct way
-client.get("http://www.web.de", function (data, response) {
-    // parsed response body as js object
-    console.log(data);
-    // raw response
-    console.log(response);
-});
+
+// gibt die EVA Nummer zurück
+function getEva() {
+
+
+                client.get("https://api.deutschebahn.com/timetables/v1/station/" + city, args, function (data, response) {
+
+
+                                console.log(city);
+                                    var eva = data.stations.station.$.eva;
+
+                            console.log(eva);
+                                return eva;
+
+                        });
+
+        }
+
+
+/* Test über departure Board, allerdings Fehler da stopName immer Offenburg
+
+
+function getDeparture() {
+
+    client.get("https://api.deutschebahn.com/fahrplan-plus/v1/departureBoard/"+8000290+"?date=2017-11-16", args, function (data, response) {
+
+        console.log(data);
+
+    });
+}
+*/
+
+function getDeparture(){
+
+
+client.get("https://api.deutschebahn.com/timetables/v1/plan/8000290/171121/12", args, function (data, response) {
+
+
+       for(var i = 0; data.timetable.s[i].dp.$.ppth != null; i++) {
+
+          // if (data.timetable.s[i].dp.$ == undefined) {
+         //   i++;
+         //  } else {
 
 
 
-var express = require('express');
-var app = express();
+           //Abfahrtszeit geplant (PlannedTime)
+           console.log(data.timetable.s[i].dp.$.pt);
 
-var a = "Guten Tag";
+           //Abfahrtszeit geändert (CurrentTime)
+           //console.log(data.timetable.s[i].dp.$.ct);
 
-app.get('/', function (req, res) {
-    res.send('<h1> Hello World 2222! </h1>' + a );
+           //Ziele der Abfahrt (Planned Path)
+           console.log(data.timetable.s[i].dp.$.ppth);
 
-});
 
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
-});
+
+           // }
+
+      }
+
+   });
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
