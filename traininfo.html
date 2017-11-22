@@ -2,9 +2,142 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>James...</title>
+    <title>MobileTraininfo</title>
+    <meta charset="UTF-8" />
+    <meta name="Marvin Rogg,Gina Samo,My Anh doan, Nico hembach" content="https://www.html-seminar.de/" />
+    <link rel="stylesheet"  href="jquery.mobile/demos/css/themes/default/jquery.mobile-1.2.0.css" />
+    <link rel="stylesheet" href="jquery.mobile/demos/docs/_assets/css/jqm-docs.css" />
+    <script src="jquery.mobile/demos/js/jquery.js"></script>
+    <script src="jquery.mobile/demos/docs/_assets/js/jqm-docs.js"></script>
+    <script src="jquery.mobile/demos/js/jquery.mobile-1.2.0.js"></script>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
+<div id="main">
+    <h1> Willkommen bei Mobile Traininfo</h1>
+
+    <script type="text/javascript">
+        var accessToken = "e605f41a45d34a969546694711fd7fe0",
+            baseUrl = "https://api.dialogflow.com/v1/",
+            $speechInput,
+            $recBtn,
+            recognition,
+            messageRecording = "Aufnahme...",
+            messageCouldntHear = "Ich habe sie nicht richtig verstanden, können Sie es wiederholen?",
+            messageInternalError = "Entschuldigung hier liegt ein interner Fehler vor",
+            messageSorry = "Es tut mir Leid dazu habe ich keine Antwort";
+        $(document).ready(function() {
+            $speechInput = $("#speech");
+            $recBtn = $("#rec");
+            $speechInput.keypress(function(event) {
+                if (event.which == 13) {
+                    event.preventDefault();
+                    send();
+                }
+            });
+            $recBtn.on("click", function(event) {
+                switchRecognition();
+            });
+            $(".debug__btn").on("click", function() {
+                $(this).next().toggleClass("is-active");
+                return false;
+            });
+        });
+        function startRecognition() {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.onstart = function(event) {
+                respond(messageRecording);
+                updateRec();
+            };
+            recognition.onresult = function(event) {
+                recognition.onend = null;
+
+                var text = "";
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    text += event.results[i][0].transcript;
+                }
+                setInput(text);
+                stopRecognition();
+            };
+            recognition.onend = function() {
+                respond(messageCouldntHear);
+                stopRecognition();
+            };
+            recognition.lang = "de";
+            recognition.start();
+        }
+
+        function stopRecognition() {
+            if (recognition) {
+                recognition.stop();
+                recognition = null;
+            }
+            updateRec();
+        }
+        function switchRecognition() {
+            if (recognition) {
+                stopRecognition();
+            } else {
+                startRecognition();
+            }
+        }
+        function setInput(text) {
+            $speechInput.val(text);
+            send();
+        }
+        function updateRec() {
+            $recBtn.text(recognition ? "Stop" : "Speak");
+        }
+        function send() {
+            var text = $speechInput.val();
+            $.ajax({
+                type: "POST",
+                url: baseUrl + "query",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: {
+                    "Authorization": "James " + accessToken
+                },
+                data: JSON.stringify({query: text, lang: "de", sessionId: "james"}),
+                success: function(data) {
+                    prepareResponse(data);
+                },
+                error: function() {
+                    respond(messageInternalError);
+                }
+            });
+        }
+        function prepareResponse(val) {
+            var debugJSON = JSON.stringify(val, undefined, 2),
+                spokenResponse = val.result.speech;
+            respond(spokenResponse);
+            debugRespond(debugJSON);
+        }
+        function debugRespond(val) {
+            $("#response").text(val);
+        }
+        function respond(val) {
+            if (val == "") {
+                val = messageSorry;
+            }
+            if (val !== messageRecording) {
+                var msg = new SpeechSynthesisUtterance();
+                msg.voiceURI = "native";
+                msg.text = val;
+                msg.lang = "de";
+                window.speechSynthesis.speak(msg);
+            }
+            $("#spokenResponse").addClass("is-active").find(".spoken-response__text").html(val);
+        }
+    </script>
+
+
+
+</div>
 
 </body>
 </html>
