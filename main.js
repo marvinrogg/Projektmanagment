@@ -3,6 +3,7 @@
 // Speichern der Rückgabewerte für Umwandlung
 
 console.log("Fahrplandaten");
+console.log("");
 var Client = require('node-rest-client').Client;
 var client = new Client();
 var city ="Offenburg";
@@ -40,7 +41,7 @@ var day = date.getDate();
 var yymmdd = year+""+month+""+day;
 var currenthours = date.getHours();
 
-console.log(yymmdd);
+
 
 
 eva = getEva();
@@ -51,35 +52,28 @@ departure = getDeparture();
 // direct way
 
 // gibt die EVA Nummer zurück
-function getEva() {
+    function getEva() {
 
 
                 client.get("https://api.deutschebahn.com/timetables/v1/station/" + city, args, function (data, response) {
 
 
-                                console.log(city);
-                                    var eva = data.stations.station.$.eva;
+                    console.log("Abfahrtsbahnhof: " + city);
+                    var eva = data.stations.station.$.eva;
 
-                            console.log(eva);
-                                return eva;
+                    console.log("ID des Bahnhofs: " + eva);
+
+
+                    console.log("______________________________________")
+
+                    return eva;
 
                         });
 
         }
 
 
-/* Test über departure Board, allerdings Fehler da stopName immer Offenburg
 
-
-function getDeparture() {
-
-    client.get("https://api.deutschebahn.com/fahrplan-plus/v1/departureBoard/"+8000290+"?date=2017-11-16", args, function (data, response) {
-
-        console.log(data);
-
-    });
-}
-*/
 
 
 //Abfrage Haltestops, geplante Abfahrtszeit und geänderte Abfahrtszeit
@@ -87,31 +81,34 @@ function getDeparture() {
 function getDeparture(){
 
 
-client.get("https://api.deutschebahn.com/timetables/v1/plan/8000290/171122/14", args, function (data, response) {
+client.get("https://api.deutschebahn.com/timetables/v1/plan/8000290/171127/10", args, function (data, response) {
 
 
-       for(var i = 0; data.timetable.s[i].dp !== (undefined); i++) {
 
-           if (data.timetable.s[i].dp.$ === undefined) {
-            i++;
-           } else {
+    for(var i = 0; i < data.timetable.s.length; i++) {
 
-
+    if ( data.timetable.s[i].dp !== (undefined)){
+            //Ziele der Abfahrt (Planned Path)
+           console.log("Zielbahnhöfe: " + data.timetable.s[i].dp.$.ppth);
 
            //Abfahrtszeit geplant (PlannedTime)
-           console.log(data.timetable.s[i].dp.$.pt);
+           console.log("Abfahrtszeit: " + data.timetable.s[i].dp.$.pt.toString().substr(-4));
 
            //Abfahrtszeit geändert (ChangedTime)
-           console.log(data.timetable.s[i].dp.$.ct);
+           if(data.timetable.s[i].dp.$.ct === undefined){
+               console.log("Keine Verspätungen bekannt")
+           }else{
+           console.log("Geänderte Abfahrtszeit: " + data.timetable.s[i].dp.$.ct.toString().substr(-4));
+           }
+}
 
-           //Ziele der Abfahrt (Planned Path)
-           console.log(data.timetable.s[i].dp.$.ppth);
+            console.log("______________________________________");
 
 
 
-            }
 
       }
+
 
    });
 
