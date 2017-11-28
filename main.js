@@ -6,7 +6,23 @@ console.log("Fahrplandaten");
 console.log("");
 var Client = require('node-rest-client').Client;
 var client = new Client();
+var async = require('async');
 var city ="Offenburg";
+
+/*
+async.series([
+    function (getEva) {
+        getEva();
+    },
+    function (getDeparture){
+
+        getDeparture();
+    }
+    ], function (err) {
+
+});
+*/
+
 
 /*
 //TEST Webseite erstellen
@@ -59,16 +75,19 @@ departure = getDeparture();
 
 
                     console.log("Abfahrtsbahnhof: " + city);
-                    var eva = data.stations.station.$.eva;
+                    eva = data.stations.station.$.eva;
 
                     console.log("ID des Bahnhofs: " + eva);
 
 
                     console.log("______________________________________")
 
-                    return eva;
+
+
+
 
                         });
+
 
         }
 
@@ -80,37 +99,38 @@ departure = getDeparture();
 //aktuelles Problem, Reihenfolge der Darstellung und Error Handling
 function getDeparture(){
 
-
-client.get("https://api.deutschebahn.com/timetables/v1/plan/8000290/171127/10", args, function (data, response) {
-
+    client.get("https://api.deutschebahn.com/timetables/v1/plan/8000290/"+yymmdd+"/"+currenthours, args, function (data, response) {
 
 
-    for(var i = 0; i < data.timetable.s.length; i++) {
 
-    if ( data.timetable.s[i].dp !== (undefined)){
-            //Ziele der Abfahrt (Planned Path)
-           console.log("Zielbahnhöfe: " + data.timetable.s[i].dp.$.ppth);
+        for(var i = 0; i < data.timetable.s.length; i++) {
 
-           //Abfahrtszeit geplant (PlannedTime)
-           console.log("Abfahrtszeit: " + data.timetable.s[i].dp.$.pt.toString().substr(-4));
+            if ( data.timetable.s[i].dp !== (undefined)){
+                //Ziele der Abfahrt (Planned Path)
+                console.log("Zielbahnhöfe: " + data.timetable.s[i].dp.$.ppth);
 
-           //Abfahrtszeit geändert (ChangedTime)
-           if(data.timetable.s[i].dp.$.ct === undefined){
-               console.log("Keine Verspätungen bekannt")
-           }else{
-           console.log("Geänderte Abfahrtszeit: " + data.timetable.s[i].dp.$.ct.toString().substr(-4));
-           }
-}
+                //Abfahrtszeit geplant (PlannedTime)
+                console.log("Abfahrtszeit: " + data.timetable.s[i].dp.$.pt.toString().substr(-4));
+
+                //Abfahrtszeit geändert (ChangedTime)
+                if(data.timetable.s[i].dp.$.ct === undefined){
+                    console.log("Keine Verspätungen bekannt")
+                }else{
+                    console.log("Geänderte Abfahrtszeit: " + data.timetable.s[i].dp.$.ct.toString().substr(-4));
+                }
+            }
 
             console.log("______________________________________");
 
 
 
 
-      }
+        }
 
 
-   });
+    });
+
+
 
 }
 
