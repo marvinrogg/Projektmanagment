@@ -7,6 +7,8 @@ var Client = require('node-rest-client').Client;
 var client = new Client();
 var city ="Offenburg";
 
+
+
 var args = {
     headers : {"Authorization" : "Bearer 207af2c9a411a2846e84fd7dd96d9c83"}
             };
@@ -61,7 +63,7 @@ client.get("https://api.deutschebahn.com/timetables/v1/plan/8000290/171121/12", 
          //   i++;
          //  } else {
 
-
+ var b = ata.timetable.s[i].dp.$
 
            //Abfahrtszeit geplant (PlannedTime)
            console.log(data.timetable.s[i].dp.$.pt);
