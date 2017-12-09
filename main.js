@@ -1,5 +1,4 @@
-// Aktuelles Problem, Reihenfolge der Darstellung der Abfragen und Fehlerbahndlungen der Abfragen
-// Speichern der Rückgabewerte für Umwandlung
+
 
 console.log("Fahrplandaten");
 console.log("");
@@ -38,7 +37,7 @@ var currenthours = date.getHours();
 
 
 // Methodenaufrufe
-getDeparture();
+//getDeparture();
 getChangedTime();
 
 
@@ -48,13 +47,13 @@ function getChangedTime() {
     client.get("https://api.deutschebahn.com/timetables/v1/station/" + city, args, function (data, response) {
 
 
-        console.log("Abfahrtsbahnhof: " + city);
+        //console.log("Abfahrtsbahnhof: " + city);
         eva = data.stations.station.$.eva;
 
-        console.log("ID des Bahnhofs: " + eva);
+       // console.log("ID des Bahnhofs: " + eva);
 
 
-        console.log("______________________________________");
+       // console.log("______________________________________");
 
         // Abfrage der Verpätungen
         client.get("https://api.deutschebahn.com/timetables/v1/rchg/" + eva, args, function (data, response) {
@@ -63,11 +62,14 @@ function getChangedTime() {
             console.log("______________________________________");
             for(var i=0;i<data.timetable.s.length;i++){
 
+
+
+                if (data.timetable.s[i].$.id !== (undefined)){
                 if(data.timetable.s[i].$.id.substring(0,19)<0){
                     console.log("ID: "+data.timetable.s[i].$.id.substring(0,20));
                 }else{
                     console.log("ID: "+data.timetable.s[i].$.id.substring(0,18));
-                }
+                }}
 
                 if (data.timetable.s[i].ar !== (undefined)) {
                     if (data.timetable.s[i].ar.$ !== (undefined)){
@@ -152,6 +154,11 @@ function getDeparture() {
 
     });
 }
+
+
+
+
+
 
 
 // gibt die EVA Nummer zurück
