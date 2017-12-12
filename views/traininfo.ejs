@@ -4,25 +4,9 @@
     <meta charset="UTF-8">
     <title>MobileTraininfo</title>
     <meta charset="UTF-8" />
-    <meta name="Marvin Rogg,Gina Samo,My Anh doan, Nico hembach" content="https://www.html-seminar.de/" />
-    <link rel="stylesheet"  href="jquery.mobile/demos/css/themes/default/jquery.mobile-1.2.0.css" />
-    <link rel="stylesheet" href="jquery.mobile/demos/docs/_assets/css/jqm-docs.css" />
-    <script src="jquery.mobile/demos/js/jquery.js"></script>
-    <script src="jquery.mobile/demos/docs/_assets/js/jqm-docs.js"></script>
-    <script src="jquery.mobile/demos/js/jquery.mobile-1.2.0.js"></script>
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="author" content="Marvin Rogg,Gina Samo,My Anh doan, Nico hembach"  />
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-
-
-
-
-
-
-
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
         var accessToken = "e605f41a45d34a969546694711fd7fe0",
             baseUrl = "https://api.dialogflow.com/v1/",
@@ -139,6 +123,7 @@
             $("#spokenResponse").addClass("is-active").find(".spoken-response__text").html(val);
         }
     </script>
+
     <style type="text/css">
         html {
             box-sizing: border-box;
@@ -147,22 +132,21 @@
             box-sizing: inherit;
         }
         body {
-            background-color:floralwhite;
+            background-color: gainsboro;
             font-family: "Helvetica", Arial, sans-serif;
             font-size: 20px;
-            margin: 20px;
+            margin: 0;
         }
         .container {
-            position: fixed;
-            top: 30%;
+            position:fixed;
+            top: 50%;
             left: 50%;
             -webkit-transform: translate(-50%, -50%);
         }
         input {
-
-            background-color: cadetblue;
+            background-color: sandybrown;
             border: 1px solid #2b2b2b;
-            color: #f6f6f6;
+            color:burlywood;
             font-family: "Helvetica";
             font-size: 20px;
             line-height: 43px;
@@ -171,10 +155,9 @@
             -webkit-transition: all 0.35s ease-in;
         }
         textarea {
-            background-color: aliceblue;
+            background-color:gainsboro;
             border: 1px solid #122435;
             color: #606B88;
-            margin-bottom: 80%;
             padding: 0.5em;
             width: 100%;
             -webkit-transition: all 0.35s ease-in;
@@ -183,9 +166,9 @@
             outline: 1px solid #48788B;
         }
         .btn {
-            background-color: #000000;
+            background-color:gainsboro;
             border: 1px solid #313335;
-            color: #3c3f41;
+            color:saddlebrown;
             cursor: pointer;
             display: inline-block;
             font-family: "Helvetica";
@@ -200,68 +183,29 @@
             background-color: #3c3f41;
             color: #000000;
         }
-        .debug {
-            bottom: 0;
-            position: fixed;
-            right: 0;
-        }
-        .debug__content {
-            font-size: 14px;
-            max-height: 0;
-            overflow: hidden;
-            -webkit-transition: all 0.35s ease-in;
-        }
-        .debug__content.is-active {
-            display: block;
-            max-height: 500px;
-        }
-        .debug__btn {
-            width: 100%;
-        }
-        .spoken-response {
-            max-height: 0;
-            overflow: hidden;
-            -webkit-transition: all 0.35s ease-in;
-        }
-        .spoken-response.is-active {
-            max-height: 400px;
-        }
-        .spoken-response__text {
-            background-color: #b7c4c6;
-            color: #000000;
-            padding: 1em;
-        }
+
     </style>
 
-    </head>
+</head>
 <body>
 
-<h1> Willkommen bei Mobile Traininfo</h1>
-<br>
-<%=title>
+<h1>MobileTrainInfo</h1>
 
-    <div class="container">
-        <input id="speech" type="text">
-        <button id="rec" class="btn">Speak</button>
-        <div id="spokenResponse" class="spoken-response">
-            <div class="spoken-response__text"></div>
-        </div>
+<div class="container">
+
+
+    <form  method="GET" target="">
+    <input id="speech" type="text" name="spee">
+    <button id="rec" class="btn" name="resu">Speak</button>
+    <div id="spokenResponse" class="spoken-response">
+        <div class="spoken-response__text"></div>
     </div>
+<iframe name="iframe" width="100%" heigth="800px">
+ <%#hier muss die Ergebnis von der Deutsche-Bahn gelesen werden  %>
+    <h1>bahnhof</h1>
+</iframe>
+</form>
 
-  <!--  <div class="debug">
-        <div class="debug__btn btn">
-            Debug JSON results
-        </div>
-        <div class="debug__content">
-            <textarea id="response" cols="40" rows="20"></textarea>
-        </div>
-    </div>
-
--->
-
-
-
-
-
+</div>
 </body>
 </html>
