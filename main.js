@@ -5,6 +5,29 @@ console.log("");
 var Client = require('node-rest-client').Client;
 var client = new Client();
 var city = "Offenburg";
+var express = require('express');
+var app = express();
+
+/*
+var apiai = require('apiai');
+
+var app = apiai("e605f41a45d34a969546694711fd7fe0");
+
+var request = app.textRequest('Abfahrten aus  Offenburg', {
+    sessionId: '1'
+});
+
+request.on('response', function(response) {
+    console.log(response);
+});
+
+request.on('error', function(error) {
+    console.log(error);
+});
+
+request.end();
+*/
+
 
 
 var args = {
@@ -37,8 +60,8 @@ var currenthours = date.getHours();
 
 
 // Methodenaufrufe
-//getDeparture();
-getChangedTime();
+getDeparture();
+//getChangedTime();
 
 
 //Abfrage Haltestops, geplante Abfahrtszeit und geänderte Abfahrtszeit
@@ -110,16 +133,16 @@ function getDeparture() {
 
         console.log("Abfahrtsbahnhof: " + city);
         eva = data.stations.station.$.eva;
-
+        stadt = "Abfahrtsbahnhof: " + city
         console.log("ID des Bahnhofs: " + eva);
-
+        eva1 = "ID des Bahnhofs: " + eva;
 
         console.log("______________________________________")
 
         // Abfrage der Abfahrten und Abfahrtszeiten
         client.get("https://api.deutschebahn.com/timetables/v1/plan/" + eva + "/" + yymmdd + "/" + currenthours, args, function (data, response) {
 
-
+            ziel = new Array();
             for (var i = 0; i < data.timetable.s.length; i++) {
 
                 if (data.timetable.s[i].dp !== (undefined)) {
@@ -132,7 +155,7 @@ function getDeparture() {
                     var abfahrtsdatum = abfahrtszeit.substring(4, 6) + "." + abfahrtszeit.substring(2, 4) + "." + abfahrtszeit.substring(0, 2);
                     var uhrzeit = abfahrtszeit.substring(6, 8) + ":" + abfahrtszeit.substring(8, 10);
                     console.log("Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "");
-
+                    ziel[i]= "Zielbahnhöfe: " + data.timetable.s[i].dp.$.ppth +" " +"Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "";
 
                     //Abfahrtszeit geändert (ChangedTime) / Verspätungen funktioniert so nicht, da es bei der DB (noch?) nicht möglich ist
                     if (data.timetable.s[i].dp.$.ct === undefined) {
@@ -186,19 +209,11 @@ function getDeparture() {
 */
 
 
-/*
-//TEST Webseite erstellen
-var express =require('express');
-var app = express();
-
-app.set('view engine', 'ejs');
-app.get('/', function (req,res) {
-
-    res.render('pages/index', { title: 'My cool page!'})
-
+app.set('view engine','ejs');
+app.get('/', function (req, res) {
+    res.render('traininfo')
 });
 app.listen(3000);
-*/
 
 
 

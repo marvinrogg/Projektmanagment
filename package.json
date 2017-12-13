@@ -2,8 +2,10 @@
   "name": "Train001",
   "version": "0.0.1",
   "dependencies": {
-    "ejs":"2.5.7",
+    "async": "^2.6.0",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "node-rest-client": "^3.1.0"
+    "node-rest-client": "^3.1.0",
+    "apiai": "^4.0.3"
   }
 }

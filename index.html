@@ -2,11 +2,11 @@
 <html lang="de">
 <head>
 
-    <title>James</title>
+    <title><%= title %></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
-        var accessToken = "e605f41a45d34a969546694711fd7fe0",
+        var accessToken = "e605f41a45d34a969546694711fd7fe0" ,
             baseUrl = "https://api.dialogflow.com/v1/",
             $speechInput,
             $recBtn,
@@ -137,7 +137,7 @@
         }
         .container {
             position: fixed;
-            top: 50%;
+            top: 20%;
             left: 50%;
             -webkit-transform: translate(-50%, -50%);
         }
@@ -186,19 +186,8 @@
             position: fixed;
             right: 0;
         }
-        .debug__content {
-            font-size: 14px;
-            max-height: 0;
-            overflow: hidden;
-            -webkit-transition: all 0.35s ease-in;
-        }
-        .debug__content.is-active {
-            display: block;
-            max-height: 500px;
-        }
-        .debug__btn {
-            width: 100%;
-        }
+
+
         .spoken-response {
             max-height: 0;
             overflow: hidden;
@@ -224,14 +213,7 @@
         <div class="spoken-response__text"></div>
     </div>
 </div>
-<div class="debug">
-    <div class="debug__btn btn">
-        Debug JSON results
-    </div>
-    <div class="debug__content">
-        <textarea id="response" cols="40" rows="20"></textarea>
-    </div>
-</div>
+
 
 
 
