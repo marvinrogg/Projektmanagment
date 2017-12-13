@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <title>MobileTraininfo</title>
@@ -188,9 +188,6 @@
 
 </head>
 <body>
-
-<h1>MobileTrainInfo</h1>
-
 <div class="container">
 
 
@@ -200,12 +197,20 @@
     <div id="spokenResponse" class="spoken-response">
         <div class="spoken-response__text"></div>
     </div>
-<iframe name="iframe" width="100%" heigth="800px">
- <%#hier muss die Ergebnis von der Deutsche-Bahn gelesen werden  %>
-    <h1>bahnhof</h1>
-</iframe>
+
+        <div>
+            <h3><%=stadt%></h3>
+            <h3><%=eva%></h3>
+
+            <ul>
+                <% for(var i=0; i<ziel.length; i++) {%>
+                <li> <%=ziel[i]%></li>
+                <% } %>
+            </ul>
+        </div>
 </form>
 
 </div>
+
 </body>
 </html>
