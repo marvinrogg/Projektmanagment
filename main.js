@@ -143,6 +143,7 @@ function getDeparture() {
         client.get("https://api.deutschebahn.com/timetables/v1/plan/" + eva + "/" + yymmdd + "/" + currenthours, args, function (data, response) {
 
             ziel = new Array();
+
             for (var i = 0; i < data.timetable.s.length; i++) {
 
                 if (data.timetable.s[i].dp !== (undefined)) {
