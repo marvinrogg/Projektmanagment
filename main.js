@@ -61,7 +61,7 @@ var currenthours = date.getHours();
 
 // Methodenaufrufe
 getDeparture();
-//getChangedTime();
+getChangedTime();
 
 
 //Abfrage Haltestops, geplante Abfahrtszeit und geänderte Abfahrtszeit
@@ -72,6 +72,8 @@ function getChangedTime() {
 
         //console.log("Abfahrtsbahnhof: " + city);
         eva = data.stations.station.$.eva;
+        stadt = "Abfahrtsbahnhof: " + city;
+        eva1 = "ID des Bahnhofs: " + eva;
 
        // console.log("ID des Bahnhofs: " + eva);
 
@@ -85,14 +87,18 @@ function getChangedTime() {
             console.log("______________________________________");
             for(var i=0;i<data.timetable.s.length;i++){
 
-
+            verspaetung = new Array();
+            var test;
 
                 if (data.timetable.s[i].$.id !== (undefined)){
                 if(data.timetable.s[i].$.id.substring(0,19)<0){
                     console.log("ID: "+data.timetable.s[i].$.id.substring(0,20));
+                    test = "ID: "+data.timetable.s[i].$.id.substring(0,20);
                 }else{
                     console.log("ID: "+data.timetable.s[i].$.id.substring(0,18));
-                }}
+                    test = "ID: "+data.timetable.s[i].$.id.substring(0,18);
+                }
+                }
 
                 if (data.timetable.s[i].ar !== (undefined)) {
                     if (data.timetable.s[i].ar.$ !== (undefined)){
@@ -112,6 +118,7 @@ function getChangedTime() {
                     }
                 }
                 console.log("______________________________________");
+                verspaetung[i]= test;
             }
 
         });
