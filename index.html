@@ -87,9 +87,9 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 headers: {
-                    "Authorization": "James " + accessToken
+                    "Authorization": "Bearer " + accessToken
                 },
-                data: JSON.stringify({query: text, lang: "de", sessionId: "james"}),
+                data: JSON.stringify({query: text, lang: "de", sessionId: "1"}),
                 success: function(data) {
                     prepareResponse(data);
                 },
@@ -130,16 +130,19 @@
             box-sizing: inherit;
         }
         body {
-            background-color: #3c3f41;
+            background-color: #b3b9bc;
             font-family: "Helvetica", Arial, sans-serif;
             font-size: 20px;
             margin: 0;
         }
         .container {
-            position: fixed;
-            top: 20%;
-            left: 50%;
-            -webkit-transform: translate(-50%, -50%);
+
+        }
+
+        .response {
+            position: center;
+
+
         }
         input {
             background-color: #313335;
@@ -206,15 +209,35 @@
 </head>
 <body>
 
+<div>
+    <h1>Mobile Train Info</h1>
+</div>
+
 <div class="container">
     <input id="speech" type="text">
     <button id="rec" class="btn">Speak</button>
     <div id="spokenResponse" class="spoken-response">
         <div class="spoken-response__text"></div>
     </div>
+
+
 </div>
 
+<div class ="response">
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
+
+</div>
+
+<div class="debug">
+    <div class="debug__btn btn">
+        Debug JSON results
+    </div>
+    <div class="debug__content">
+        <textarea id="response" cols="40" rows="20"></textarea>
+    </div>
+
+</div>
 
 
 </body>

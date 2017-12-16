@@ -11,9 +11,9 @@ var app = express();
 /*
 var apiai = require('apiai');
 
-var app = apiai("e605f41a45d34a969546694711fd7fe0");
+var appdiagloflow = apiai("e605f41a45d34a969546694711fd7fe0");
 
-var request = app.textRequest('Abfahrten aus  Offenburg', {
+var request = appdiagloflow.textRequest('Abfahrten aus  Offenburg', {
     sessionId: '1'
 });
 
@@ -26,8 +26,8 @@ request.on('error', function(error) {
 });
 
 request.end();
-*/
 
+*/
 
 
 var args = {
@@ -221,7 +221,7 @@ app.set('view engine','ejs');
 app.get('/', function (req, res) {
     res.render('traininfo')
 });
-app.listen(3000);
+app.listen(3001);
 
 
 
