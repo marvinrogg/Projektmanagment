@@ -60,7 +60,7 @@ var currenthours = date.getHours();
 
 
 // Methodenaufrufe
-getDeparture();
+// getDeparture();
 getChangedTime();
 
 
