@@ -4,7 +4,7 @@ console.log("Fahrplandaten");
 console.log("");
 var Client = require('node-rest-client').Client;
 var client = new Client();
-var city = "Offenburg";
+var city = "";
 var express = require('express');
 var app = express();
 
@@ -60,8 +60,8 @@ var currenthours = date.getHours();
 
 
 // Methodenaufrufe
-getDeparture();
-getChangedTime();
+//getDeparture();
+//getChangedTime();
 
 
 //Abfrage Haltestops, geplante Abfahrtszeit und geänderte Abfahrtszeit
@@ -215,6 +215,27 @@ function getDeparture() {
 
     }
 */
+
+//xxxxxxxxxx Intention noch einfügen
+
+app.get('/stadt/:id', function (req, res) {
+
+
+    city = req.params.id;
+
+    console.log(city);
+
+    getDeparture();
+
+})
+
+
+
+app.get ('*', function (req, res) {
+    res.sendFile("/Users/marvinrogg/WebstormProjects/Projektmanagment/index.html")
+
+})
+
 
 
 app.set('view engine','ejs');

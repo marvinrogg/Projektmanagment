@@ -103,6 +103,24 @@
                 spokenResponse = val.result.speech;
             respond(spokenResponse);
             debugRespond(debugJSON);
+
+            console.log("Starte Aufruf");
+
+            // xxxxxxxxxxxxxxxxxxx
+            var rcity = val.result.parameters.Stadt;
+            console.log(rcity);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost:3001/stadt/" + rcity, true)
+
+            xhr.send(null);
+
+            console.log("Ende Aufruf");
+
+
+
+
+
         }
         function debugRespond(val) {
             $("#response").text(val);
