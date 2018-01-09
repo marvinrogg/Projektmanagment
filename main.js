@@ -8,26 +8,6 @@ var city = "";
 var express = require('express');
 var app = express();
 
-/*
-var apiai = require('apiai');
-
-var appdiagloflow = apiai("e605f41a45d34a969546694711fd7fe0");
-
-var request = appdiagloflow.textRequest('Abfahrten aus  Offenburg', {
-    sessionId: '1'
-});
-
-request.on('response', function(response) {
-    console.log(response);
-});
-
-request.on('error', function(error) {
-    console.log(error);
-});
-
-request.end();
-
-*/
 
 
 var args = {
@@ -50,7 +30,7 @@ if (date.getDate() < 10) {
 
 
 if (date.getMonth() + 1 < 10) {
-    var month = "0" + date.getMonth() + 1;
+    var month = "" + date.getMonth() + 1;
 } else {
     var month = date.getMonth() + 1;
 }
@@ -147,6 +127,7 @@ function getDeparture() {
         console.log("______________________________________")
 
         // Abfrage der Abfahrten und Abfahrtszeiten
+
         client.get("https://api.deutschebahn.com/timetables/v1/plan/" + eva + "/" + yymmdd + "/" + currenthours, args, function (data, response) {
 
             ziel = new Array();
