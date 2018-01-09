@@ -227,6 +227,8 @@ app.get('/stadt/:id', function (req, res) {
 
     getDeparture();
 
+
+
 })
 
 
