@@ -7,7 +7,7 @@ var client = new Client();
 var city = "";
 var express = require('express');
 var app = express();
-
+var renderpage = express();
 
 
 var args = {
@@ -36,7 +36,14 @@ if (date.getMonth() + 1 < 10) {
 }
 
 var yymmdd = year + "" + month + "" + day;
-var currenthours = date.getHours();
+
+if(date.getHours() < 10){
+    var currenthours = "0" + date.getHours();
+}else{
+    var currenthours = date.getHours();
+}
+
+
 
 
 // Methodenaufrufe
@@ -144,7 +151,7 @@ function getDeparture() {
                     var abfahrtsdatum = abfahrtszeit.substring(4, 6) + "." + abfahrtszeit.substring(2, 4) + "." + abfahrtszeit.substring(0, 2);
                     var uhrzeit = abfahrtszeit.substring(6, 8) + ":" + abfahrtszeit.substring(8, 10);
                     console.log("Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "");
-                    ziel[i]= "Zielbahnhöfe: " + data.timetable.s[i].dp.$.ppth +" " +"Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "";
+                    ziel[i]= "Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + " <br> " + "Zielbahnhöfe: " + data.timetable.s[i].dp.$.ppth;
 
                     //Abfahrtszeit geändert (ChangedTime) / Verspätungen funktioniert so nicht, da es bei der DB (noch?) nicht möglich ist
                     if (data.timetable.s[i].dp.$.ct === undefined) {
@@ -221,10 +228,11 @@ app.get ('*', function (req, res) {
 
 
 
-app.set('view engine','ejs');
-app.get('/', function (req, res) {
+renderpage.set('view engine','ejs');
+renderpage.get('/', function (req, res) {
     res.render('traininfo')
 });
+renderpage.listen(3002);
 app.listen(3001);
 
 

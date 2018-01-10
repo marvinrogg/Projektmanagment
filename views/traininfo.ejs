@@ -1,41 +1,134 @@
 <!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>MobileTraininfo</title>
-    <meta charset="UTF-8" />
-    <meta name="author" content="Marvin Rogg,Gina Samo,My Anh doan, Nico hembach"  />
-    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+
+
+<html>
+
+
+<style type="text/css">
+    html {
+        box-sizing: border-box;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+    body {
+        background-color: #b3b9bc;
+        font-family: "Helvetica", Arial, sans-serif;
+        font-size: 20px;
+        margin: 0;
+    }
+    .container {
+
+    }
+
+    .response {
+        position: center;
+
+
+    }
+    input {
+        background-color: #313335;
+        border: 1px solid #2b2b2b;
+        color: #f6f6f6;
+        font-family: "Helvetica";
+        font-size: 20px;
+        line-height: 43px;
+        padding: 0 0.75em;
+        width: 400px;
+        -webkit-transition: all 0.35s ease-in;
+    }
+    textarea {
+        background-color: #070F24;
+        border: 1px solid #122435;
+        color: #606B88;
+        padding: 0.5em;
+        width: 100%;
+        -webkit-transition: all 0.35s ease-in;
+    }
+    input:active, input:focus, textarea:active, textarea:focus {
+        outline: 1px solid #48788B;
+    }
+    .btn {
+        background-color: #000000;
+        border: 1px solid #313335;
+        color: #3c3f41;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Helvetica";
+        font-size: 20px;
+        line-height: 43px;
+        padding: 0 0.75em;
+        text-align: center;
+        text-transform: uppercase;
+        -webkit-transition: all 0.35s ease-in;
+    }
+    .btn:hover {
+        background-color: #3c3f41;
+        color: #000000;
+    }
+    .debug {
+        bottom: 0;
+        position: fixed;
+        right: 0;
+    }
+
+
+    .spoken-response {
+        max-height: 0;
+        overflow: hidden;
+        -webkit-transition: all 0.35s ease-in;
+    }
+    .spoken-response.is-active {
+        max-height: 400px;
+    }
+    .spoken-response__text {
+        background-color: #b7c4c6;
+        color: #000000;
+        padding: 1em;
+    }
+</style>
 
 </head>
 <body>
+
+<div>
+    <h1>Mobile Train Info</h1>
+
+    <a href="http://localhost:3001/"> Neue Suchanfrage</a>
+</div>
+
 <div class="container">
 
-
-
-
-        <div>
-
-            <h3><%=stadt%></h3>
-            <h3><%=eva1%></h3>
-
-            <ul>
-                <% for(var i=0; i<ziel.length; i++) {%>
-                <li> <%=ziel[i]%></li>
-                <% } %>
-            </ul>
-
-            <ul>
-                <% for(var i=0; i<verspaetung.length; i++) {%>
-                <li> <%=verspaetung[i]%></li>
-                <% } %>
-            </ul>
-        </div>
+    <div id="spokenResponse" class="spoken-response">
+        <div class="spoken-response__text"></div>
+    </div>
 
 
 </div>
+
+<div class ="response">
+    <div>
+
+        <h3><%=stadt%></h3>
+        <h3><%=eva1%></h3>
+
+
+
+        <ul>
+            <% for(var i=0; i<ziel.length; i++) {%>
+            <li> <%=ziel[i]%></li> <br>
+            <% } %>
+        </ul>
+
+
+    </div>
+
+
+</div>
+
+
+
 
 </body>
 </html>
