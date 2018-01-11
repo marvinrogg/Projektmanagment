@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>MobileTraininfo</title>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Marvin Rogg,Gina Samo,My Anh doan, Nico hembach"  />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+</head>
+<body>
+<div class="container">
+    <style>
+
+        body {
+            background-color: #b3b9bc;
+            font-family: "Helvetica", Arial, sans-serif;
+            font-size: 12px;
+            margin: 2px;}
+        table{ border: 1px solid black;}
+        @media all and (min-width: 36em){
+            .main { float: left; width:60%; }
+
+        }
+
+    </style>
+
+
+
+    <div id="main">
+
+        <h3><%=stadt%></h3>
+        <h3><%=eva1%></h3>
+
+        <a href="http://localhost:3001/"> Neue Suchanfrage</a>
+        <br>
+        <br>
+        <table>
+            <% for(var i=0; i<verspaetung.length; i++) {%>
+            <tr><td> <%=verspaetung[i]%></td></tr>
+            <% } %>
+        </table>
+    </div>
+
+
+</div>
+
+</body>
+</html>

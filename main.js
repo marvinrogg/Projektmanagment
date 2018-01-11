@@ -8,6 +8,7 @@ var city = "";
 var express = require('express');
 var app = express();
 var renderpage = express();
+var renderpage2 = express();
 
 
 var args = {
@@ -151,6 +152,7 @@ function getDeparture() {
                     var abfahrtsdatum = abfahrtszeit.substring(4, 6) + "." + abfahrtszeit.substring(2, 4) + "." + abfahrtszeit.substring(0, 2);
                     var uhrzeit = abfahrtszeit.substring(6, 8) + ":" + abfahrtszeit.substring(8, 10);
                     console.log("Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "");
+                    // xxx <br> Tag wird in ejs beim rendern nicht erkannt
                     ziel[i]= "Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + " <br> " + "Zielbahnhöfe: " + data.timetable.s[i].dp.$.ppth;
 
                     //Abfahrtszeit geändert (ChangedTime) / Verspätungen funktioniert so nicht, da es bei der DB (noch?) nicht möglich ist
@@ -175,45 +177,39 @@ function getDeparture() {
 }
 
 
+//xxx Intention noch einfügen
 
-
-
-
-
-// gibt die EVA Nummer zurück
-/*function getEva() {
-
-    client.get("https://api.deutschebahn.com/timetables/v1/station/" + city, args, function (data, response) {
-
-
-                console.log("Abfahrtsbahnhof: " + city);
-                eva = data.stations.station.$.eva;
-
-                console.log("ID des Bahnhofs: " + eva);
-
-
-                console.log("______________________________________")
-
-
-
-
-
-                    });
-
-
-    }
-*/
-
-//xxxxxxxxxx Intention noch einfügen
-
-app.get('/stadt/:id', function (req, res) {
+app.get('/stadt/:id/:intention', function (req, res) {
 
 
     city = req.params.id;
+    var intention = req.params.intention;
 
     console.log(city);
+    console.log(intention);
 
-    getDeparture();
+    if(intention == "getDeparture();"){
+
+        getDeparture();
+
+        renderpage.set('view engine','ejs');
+        renderpage.get('/', function (req, res) {
+            res.render('traininfo')
+        });
+
+
+    } else if (intention == "getChangedTime();"){
+
+        getChangedTime();
+
+        renderpage2.set('view engine','ejs');
+        renderpage2.get('/', function (req, res) {
+            res.render('traininfo2')
+        });
+
+    }
+
+
 
 
 
@@ -225,14 +221,8 @@ app.get ('*', function (req, res) {
     res.sendFile("/Users/marvinrogg/WebstormProjects/Projektmanagment/index.html")
 
 })
-
-
-
-renderpage.set('view engine','ejs');
-renderpage.get('/', function (req, res) {
-    res.render('traininfo')
-});
 renderpage.listen(3002);
+renderpage2.listen(3003);
 app.listen(3001);
 
 

@@ -106,17 +106,19 @@
 
             console.log("Starte Aufruf");
 
-            // xxxxxxxxxxxxxxxxxxx
+            // xxx Intention weitergeben
             var rcity = val.result.parameters.Stadt;
-            console.log(rcity);
+            console.log("1: " + rcity);
+
+            var intention = val.result.action;
+            console.log("2:" + intention);
 
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "http://localhost:3001/stadt/" + rcity, true)
+            xhr.open("GET", "http://localhost:3001/stadt/" + rcity + '/' + intention, true)
 
             xhr.send(null);
 
             console.log("Ende Aufruf");
-
 
 
 
@@ -243,7 +245,10 @@
 
 <div class ="response">
     <br>
-    <a href="http://localhost:3002/"> Ergebnisse Ihrer Suchanfrage</a>
+    <a id="abfahrt" href="http://localhost:3002/"> Abfahrten</a>
+
+    <br>
+    <a id="verspaetung" href="http://localhost:3003/"> Verspätungen</a>
 
 
 </div>
