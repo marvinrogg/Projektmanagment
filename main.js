@@ -73,9 +73,10 @@ function getChangedTime() {
 
             console.log("Verspätung von: " + city);
             console.log("______________________________________");
+            verspaetung = new Array();
             for(var i=0;i<data.timetable.s.length;i++){
 
-            verspaetung = new Array();
+
             var test;
 
                 if (data.timetable.s[i].$.id !== (undefined)){
@@ -94,7 +95,12 @@ function getChangedTime() {
                         var arDAusgabe = arD.substring(4,6)+"."+arD.substring(2,4)+"."+arD.substring(0,2);
                         var arHAusgabe = arD.substring(6,8) + ":" + arD.substring(8,10);
                         console.log("Ankunftsänderung: " + arDAusgabe + "\t" + arHAusgabe);
+                        test2 = " Ankunftsänderung: " + arDAusgabe + "\t" + arHAusgabe;
+                    }else {
+                        test2 = "";
                     }
+                }else {
+                    test2 = "";
                 }
 
                 if (data.timetable.s[i].dp !== (undefined)) {
@@ -103,10 +109,15 @@ function getChangedTime() {
                         var dpDAusgabe = dpD.substring(4,6)+"."+dpD.substring(2,4)+"."+dpD.substring(0,2);
                         var dpHAusgabe = dpD.substring(6,8) + ":" + dpD.substring(8,10);
                         console.log("Abfahrtsänderung: " + dpDAusgabe + "\t" + dpHAusgabe);
+                        test3 = " Abfahrtsänderung: " + dpDAusgabe + "\t" + dpHAusgabe;
+                    }else {
+                        test3 = "";
                     }
+                }else {
+                    test3 = "";
                 }
                 console.log("______________________________________");
-                verspaetung[i]= test;
+                verspaetung[i]= test + test2 + test3;
             }
 
         });
