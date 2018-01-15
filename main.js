@@ -147,9 +147,13 @@ function getChangedTime() {
 
 
                             console.log("Zielbahnhöfe: " + data.timetable.s[k].dp.$.ppth);
+                            var abfahrtszeit = data.timetable.s[k].dp.$.pt.toString();
+                            var abfahrtsdatum = abfahrtszeit.substring(4, 6) + "." + abfahrtszeit.substring(2, 4) + "." + abfahrtszeit.substring(0, 2);
+                            var uhrzeit = abfahrtszeit.substring(6, 8) + ":" + abfahrtszeit.substring(8, 10);
+                            console.log("Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "");
 
                             console.log(map.get(data.timetable.s[k].$.id));
-                            verspaetung[k] = "Zielbahnhöfe: " + data.timetable.s[k].dp.$.ppth + map.get(data.timetable.s[k].$.id);
+                            verspaetung[k] = "Zielbahnhöfe: " + data.timetable.s[k].dp.$.ppth + " Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "" + map.get(data.timetable.s[k].$.id);
                         }
 
                     }
@@ -237,6 +241,7 @@ app.get('/stadt/:id/:intention', function (req, res) {
 
     console.log(city);
     console.log(intention);
+    console.log("______________TEST_____________");
 
     if(intention == "getDeparture();"){
 
