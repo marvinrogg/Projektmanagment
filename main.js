@@ -9,6 +9,9 @@ var express = require('express');
 var app = express();
 var renderpage = express();
 var renderpage2 = express();
+var HashMap = require('hashmap');
+
+
 
 
 var args = {
@@ -55,6 +58,9 @@ if(date.getHours() < 10){
 //Abfrage Haltestops, geplante Abfahrtszeit und geänderte Abfahrtszeit
 function getChangedTime() {
     var eva;
+    var map = new HashMap();
+    verspaetung = new Array();
+
     client.get("https://api.deutschebahn.com/timetables/v1/station/" + city, args, function (data, response) {
 
 
@@ -72,21 +78,21 @@ function getChangedTime() {
         client.get("https://api.deutschebahn.com/timetables/v1/rchg/" + eva, args, function (data, response) {
 
             console.log("Verspätung von: " + city);
-            console.log("______________________________________");
-            verspaetung = new Array();
+           // console.log("______________________________________");
+
+
+            if(data.timetable.s !== (undefined)){
+
             for(var i=0;i<data.timetable.s.length;i++){
 
 
             var test;
 
                 if (data.timetable.s[i].$.id !== (undefined)){
-                if(data.timetable.s[i].$.id.substring(0,19)<0){
-                    console.log("ID: "+data.timetable.s[i].$.id.substring(0,20));
-                    test = "ID: "+data.timetable.s[i].$.id.substring(0,20);
-                }else{
-                    console.log("ID: "+data.timetable.s[i].$.id.substring(0,18));
-                    test = "ID: "+data.timetable.s[i].$.id.substring(0,18);
-                }
+
+                  //  console.log("ID: "+data.timetable.s[i].$.id);
+                    test =data.timetable.s[i].$.id;
+
                 }
 
                 if (data.timetable.s[i].ar !== (undefined)) {
@@ -94,8 +100,9 @@ function getChangedTime() {
                         var arD = data.timetable.s[i].ar.$.ct;
                         var arDAusgabe = arD.substring(4,6)+"."+arD.substring(2,4)+"."+arD.substring(0,2);
                         var arHAusgabe = arD.substring(6,8) + ":" + arD.substring(8,10);
-                        console.log("Ankunftsänderung: " + arDAusgabe + "\t" + arHAusgabe);
+                      //  console.log("Ankunftsänderung: " + arDAusgabe + "\t" + arHAusgabe);
                         test2 = " Ankunftsänderung: " + arDAusgabe + "\t" + arHAusgabe;
+
                     }else {
                         test2 = "";
                     }
@@ -103,12 +110,15 @@ function getChangedTime() {
                     test2 = "";
                 }
 
+
+
+
                 if (data.timetable.s[i].dp !== (undefined)) {
                     if (data.timetable.s[i].dp.$ !== (undefined)){
                         var dpD = data.timetable.s[i].dp.$.ct;
                         var dpDAusgabe = dpD.substring(4,6)+"."+dpD.substring(2,4)+"."+dpD.substring(0,2);
                         var dpHAusgabe = dpD.substring(6,8) + ":" + dpD.substring(8,10);
-                        console.log("Abfahrtsänderung: " + dpDAusgabe + "\t" + dpHAusgabe);
+                        // console.log("Abfahrtsänderung: " + dpDAusgabe + "\t" + dpHAusgabe);
                         test3 = " Abfahrtsänderung: " + dpDAusgabe + "\t" + dpHAusgabe;
                     }else {
                         test3 = "";
@@ -116,10 +126,39 @@ function getChangedTime() {
                 }else {
                     test3 = "";
                 }
-                console.log("______________________________________");
-                verspaetung[i]= test + test2 + test3;
+
+
+                map.set(test, test2+test3);
+
+            }
             }
 
+            client.get("https://api.deutschebahn.com/timetables/v1/plan/" + eva + "/" + yymmdd + "/" + currenthours, args, function (data, response) {
+
+
+
+                for (var k = 0; k < data.timetable.s.length; k++) {
+
+
+                    if (data.timetable.s[k].dp !== (undefined)) {
+
+
+                        if(map.get(data.timetable.s[k].$.id) !== undefined){
+
+
+                            console.log("Zielbahnhöfe: " + data.timetable.s[k].dp.$.ppth);
+
+                            console.log(map.get(data.timetable.s[k].$.id));
+                            verspaetung[k] = "Zielbahnhöfe: " + data.timetable.s[k].dp.$.ppth + map.get(data.timetable.s[k].$.id);
+                        }
+
+                    }
+
+
+                }
+
+
+            });
         });
 
 
@@ -167,13 +206,13 @@ function getDeparture() {
                     ziel[i]= "Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + " <br> " + "Zielbahnhöfe: " + data.timetable.s[i].dp.$.ppth;
 
                     //Abfahrtszeit geändert (ChangedTime) / Verspätungen funktioniert so nicht, da es bei der DB (noch?) nicht möglich ist
-                    if (data.timetable.s[i].dp.$.ct === undefined) {
+                   /* if (data.timetable.s[i].dp.$.ct === undefined) {
                         console.log("Keine Verspätungen bekannt");
                         console.log("______________________________________");
                     } else {
                         console.log("Geänderte Abfahrtszeit: " + data.timetable.s[i].dp.$.ct.toString().substr(-4));
                         console.log("______________________________________");
-                    }
+                    }*/
 
                 }
 
