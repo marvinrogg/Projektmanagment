@@ -207,6 +207,7 @@ function getDeparture() {
                     var uhrzeit = abfahrtszeit.substring(6, 8) + ":" + abfahrtszeit.substring(8, 10);
                     console.log("Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "");
                     // xxx <br> Tag wird in ejs beim rendern nicht erkannt
+
                     ziel[i]= "Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + " <br> " + "Zielbahnhöfe: " + data.timetable.s[i].dp.$.ppth;
 
                     //Abfahrtszeit geändert (ChangedTime) / Verspätungen funktioniert so nicht, da es bei der DB (noch?) nicht möglich ist
