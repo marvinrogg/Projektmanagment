@@ -276,7 +276,7 @@ app.get('/stadt/:id/:intention', function (req, res) {
 
 
 app.get ('*', function (req, res) {
-    res.sendFile("/Users/marvinrogg/WebstormProjects/Projektmanagment/index.html")
+    res.sendFile("/Users/myanhdoan/WebstormProjects/Projektmanagment/index.html")
 
 })
 renderpage.listen(3002);
