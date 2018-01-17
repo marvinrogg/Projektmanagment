@@ -12,7 +12,9 @@ var renderpage2 = express();
 var HashMap = require('hashmap');
 
 
+var path = require('path');
 
+app.use(express.static(path.join(__dirname, 'public')));
 
 var args = {
     headers: {"Authorization": "Bearer 207af2c9a411a2846e84fd7dd96d9c83"}
@@ -250,8 +252,8 @@ app.get('/stadt/:id/:intention', function (req, res) {
 
         getDeparture();
 
-        renderpage.set('view engine','ejs');
-        renderpage.get('/', function (req, res) {
+        app.set('view engine','ejs');
+        app.get('/p1', function (req, res) {
             res.render('traininfo')
         });
 
@@ -260,8 +262,8 @@ app.get('/stadt/:id/:intention', function (req, res) {
 
         getChangedTime();
 
-        renderpage2.set('view engine','ejs');
-        renderpage2.get('/', function (req, res) {
+        app.set('view engine','ejs');
+        app.get('/p2', function (req, res) {
             res.render('traininfo2')
         });
 
@@ -275,12 +277,12 @@ app.get('/stadt/:id/:intention', function (req, res) {
 
 
 
-app.get ('*', function (req, res) {
-    res.sendFile("/Users/marvinrogg/WebstormProjects/Projektmanagment/index.html")
+app.get ('/p0', function (req, res) {
+    res.sendFile(path.join(__dirname, '/public',  "index.html"));
 
 })
-renderpage.listen(3002);
-renderpage2.listen(3003);
+//renderpage.listen(3002);
+//renderpage2.listen(3003);
 app.listen(3001);
 
 

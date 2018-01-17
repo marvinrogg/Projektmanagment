@@ -15,7 +15,11 @@
             messageCouldntHear = "Ich habe sie nicht richtig verstanden, können Sie es wiederholen?",
             messageInternalError = "Entschuldigung hier liegt ein interner Fehler vor",
             messageSorry = "Es tut mir Leid dazu habe ich keine Antwort";
+
         $(document).ready(function() {
+
+            alert("Inside jquery");
+
             $speechInput = $("#speech");
             $recBtn = $("#rec");
             $speechInput.keypress(function(event) {
@@ -32,6 +36,7 @@
                 return false;
             });
         });
+
         function startRecognition() {
             recognition = new webkitSpeechRecognition();
             recognition.continuous = false;
@@ -245,10 +250,10 @@
 
 <div class ="response">
     <br>
-    <a id="abfahrt" href="http://localhost:3002/"> Abfahrten</a>
+    <a id="abfahrt" href="http://localhost:3001/p1"> Abfahrten</a>
 
     <br>
-    <a id="verspaetung" href="http://localhost:3003/"> Verspätungen</a>
+    <a id="verspaetung" href="http://localhost:3001/p2"> Verspätungen</a>
 
 
 </div>
