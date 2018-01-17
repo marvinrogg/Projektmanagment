@@ -60,6 +60,7 @@ function getChangedTime() {
     var eva;
     var map = new HashMap();
     verspaetung = new Array();
+    count2 = 0;
 
     client.get("https://api.deutschebahn.com/timetables/v1/station/" + city, args, function (data, response) {
 
@@ -153,7 +154,8 @@ function getChangedTime() {
                             console.log("Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "");
 
                             console.log(map.get(data.timetable.s[k].$.id));
-                            verspaetung[k] = "Zielbahnhöfe: " + data.timetable.s[k].dp.$.ppth + " Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "" + map.get(data.timetable.s[k].$.id);
+                            verspaetung[count2] = "Zielbahnhöfe: " + data.timetable.s[k].dp.$.ppth + " Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "" + map.get(data.timetable.s[k].$.id);
+                            count2++;
                         }
 
                     }
@@ -193,7 +195,7 @@ function getDeparture() {
         client.get("https://api.deutschebahn.com/timetables/v1/plan/" + eva + "/" + yymmdd + "/" + currenthours, args, function (data, response) {
 
             ziel = new Array();
-
+            count = 0;
             for (var i = 0; i < data.timetable.s.length; i++) {
 
                 if (data.timetable.s[i].dp !== (undefined)) {
@@ -208,8 +210,8 @@ function getDeparture() {
                     console.log("Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + "");
                     // xxx <br> Tag wird in ejs beim rendern nicht erkannt
 
-                    ziel[i]= "Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + " <br> " + "Zielbahnhöfe: " + data.timetable.s[i].dp.$.ppth;
-
+                    ziel[count]= "Abfahrt: " + abfahrtsdatum + "  " + uhrzeit + " " + "Zielbahnhöfe: " + data.timetable.s[i].dp.$.ppth;
+                    count++;
                     //Abfahrtszeit geändert (ChangedTime) / Verspätungen funktioniert so nicht, da es bei der DB (noch?) nicht möglich ist
                    /* if (data.timetable.s[i].dp.$.ct === undefined) {
                         console.log("Keine Verspätungen bekannt");
